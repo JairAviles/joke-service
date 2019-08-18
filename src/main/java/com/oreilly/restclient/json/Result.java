@@ -1,6 +1,9 @@
 package com.oreilly.restclient.json;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Result {
+    @JsonProperty("formatted_address")
     private String formattedAddress;
     private Geometry geometry;
 

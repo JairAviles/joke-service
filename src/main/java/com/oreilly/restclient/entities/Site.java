@@ -48,12 +48,10 @@ public class Site {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Site{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", latitude=").append(latitude);
-        sb.append(", longitude=").append(longitude);
-        sb.append('}');
-        return sb.toString();
+        return "Site{" +
+                "name='" + name + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
     }
 }
