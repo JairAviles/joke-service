@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class GeocoderService {
@@ -25,7 +26,7 @@ public class GeocoderService {
     public Site getLatLng(String... address) throws UnsupportedEncodingException {
         String joinedAddress = String.join(",", address);
         String encodedAddress = "";
-        encodedAddress = URLEncoder.encode(joinedAddress,"UTF-8");
+        encodedAddress = URLEncoder.encode(joinedAddress, StandardCharsets.UTF_8.toString());
 
         Response response = restTemplate.getForObject(
                 String.format("%s?address=%s&key=%s", BASE, encodedAddress, KEY), Response.class);
