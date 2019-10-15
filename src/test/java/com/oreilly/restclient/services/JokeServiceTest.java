@@ -7,9 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import reactor.test.StepVerifier;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SuppressWarnings("WeakerAccess")
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 class JokeServiceTest {
@@ -23,5 +27,23 @@ class JokeServiceTest {
         String joke = service.getJoke("Jair", "Aviles");
         logger.info(joke);
         assertTrue(joke.contains("Jair") || joke.contains("Aviles"));
+    }
+
+    @Test
+    public void getJokeAsync() {
+        String joke = service.getJokeAsync("Elber", "Gonzales")
+                              .block(Duration.ofSeconds(2));
+        logger.info(joke);
+        assertTrue(joke.contains("Elber") || joke.contains("Gonzales"));
+    }
+
+    @Test
+    public void useStepVerifier() {
+        StepVerifier.create(service.getJokeAsync("Elber", "Gonzales"))
+                    .assertNext(joke -> {
+                        logger.info(joke);
+                        assertTrue(joke.contains("Elber") || joke.contains("Gonzales"));
+                    })
+                    .verifyComplete();
     }
 }
